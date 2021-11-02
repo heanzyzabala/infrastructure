@@ -1,16 +1,16 @@
 #!/bin/bash
 
 usage () {
-  echo "Deploys an app to a cluster:"
+  echo "Deploys an app to a specified env:"
   echo
   echo "Usage:"
-  echo "  deploy.sh --app|-a <app-name> [--help|-h] [--namespace|-n <dev>]"
+  echo "  deploy.sh --app|-a <app-name> [--help|-h] [--env|-e <dev>]"
   echo
   echo "Optional Args:"
-  echo "  -n, --namespace          Defaults to 'dev'"
+  echo "  -e, --env          Defaults to 'dev'"
   echo
   echo "Examples:"
-  echo "  deploy.sh -a example-app -n dev"
+  echo "  deploy.sh -a example-app -e dev"
   echo  
 }
 
@@ -24,13 +24,13 @@ print () {
   exit 1
 }
 
-NAMESPACE=
+DEPLOY_ENV=
 APP_NAME=
 
 while true; do
   case "$1" in 
-    -n|--namespace)
-      NAMESPACE="$2"
+    -e|--env)
+      DEPLOY_ENV="$2"
       shift
       ;;
     -a|--app)
@@ -54,10 +54,7 @@ if [ -z "${APP_NAME}" ]; then
   error "Value for --app is required."
 fi
 
-if [ -z "${NAMESPACE}" ]; then
-  NAMESPACE="dev"
-  print "Default value for --namespace set to 'dev'"
+if [ -z "${DEPLOY_ENV}" ]; then
+  DEPLOY_ENV="dev"
+  print "Default value for --env set to 'dev'"
 fi 
-
-echo "namespace: $NAMESPACE"
-echo "app_name: $APP_NAME"
