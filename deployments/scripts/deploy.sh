@@ -4,13 +4,14 @@ usage () {
   echo "Deploys an app to a specified env:"
   echo
   echo "Usage:"
-  echo "  deploy.sh --app|-a <app-name> [--help|-h] [--env|-e <dev>]"
+  echo "  deploy.sh --app|-a <app-name> [--help|-h] [--env|-e <dev>] [-t|--tag <tag>]"
   echo
   echo "Optional Args:"
   echo "  -e, --env          Defaults to 'dev'"
+  echo "  -t, --tag          Defaults to the latest docker image"
   echo
   echo "Examples:"
-  echo "  deploy.sh -a example-app -e dev"
+  echo "  deploy.sh -a example-app -e dev -t 1.0.0"
   echo  
 }
 
@@ -21,11 +22,12 @@ error () {
 
 print () {
   echo "INFO: $1"
-  exit 1
 }
 
+SCRIPT_PATH="$(dirname $(dirname $0))"
 DEPLOY_ENV=
 APP_NAME=
+TAG=
 
 while true; do
   case "$1" in 
@@ -38,6 +40,10 @@ while true; do
         error "Value for --app is required."
       fi
       APP_NAME="$2" 
+      shift
+      ;;
+    -t|--tag)
+      TAG="$2" 
       shift
       ;;
     -h|--help)
@@ -56,5 +62,15 @@ fi
 
 if [ -z "${DEPLOY_ENV}" ]; then
   DEPLOY_ENV="dev"
-  print "Default value for --env set to 'dev'"
-fi 
+  print "Default value for --env set to 'dev'."
+fi
+
+if [ -z "${TAG}" ]; then
+  TAG="latest"
+  print "Default value for --tag set to 'latest'."
+fi
+
+if [ ! -d "deployments/apps/${APP_NAME}" ]; then
+  error "'${APP_NAME}' does not exist in deployment/apps directory."
+fi
+
