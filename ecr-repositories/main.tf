@@ -12,6 +12,6 @@ provider "aws" {
 }
 
 module "ecr_infrastructure-example-app" {
-  source = "../terraform-modules/aws-ecrpublic-repository"
-  name   = "infrascturcture-example-app"
+  source = "../terraform-modules/aws-ecr-repository"
+  name   = "infrastructure-example-app"
 }
