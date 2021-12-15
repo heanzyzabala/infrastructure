@@ -3,6 +3,7 @@ resource "aws_lightsail_instance" "lightsail_instance" {
   availability_zone = var.availability_zone
   blueprint_id      = var.blueprint_id
   bundle_id         = var.bundle_id
+  user_data         = var.user_data
 }
 
 resource "aws_lightsail_static_ip" "lightsail_instance_static_ip" {

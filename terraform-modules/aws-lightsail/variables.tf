@@ -13,3 +13,8 @@ variable "blueprint_id" {
 variable "bundle_id" {
   type = string
 }
+
+variable "user_data" {
+  type = string
+  default = null
+}
