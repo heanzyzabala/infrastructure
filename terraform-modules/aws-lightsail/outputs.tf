@@ -1,7 +1,7 @@
-output "instance_id" {
-  value = aws_lightsail_instance.lightsail_instance.id
+output "private_ip" {
+  value = aws_lightsail_instance.lightsail_instance.private_ip_address
 }
 
-output "instance_public_ip" {
-  value = aws_lightsail_static_ip.lightsail_instance_static_ip.ip_address
+output "public_ip" {
+  value = aws_lightsail_instance.lightsail_instance.public_ip_address
 }
